@@ -223,6 +223,7 @@ main:focus {
   justify-content: space-between;
   gap: 12px;
   padding: 10px var(--gutter);
+  background: var(--c-cream);
   background: color-mix(in srgb, var(--c-cream) 92%, transparent);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--c-border);
@@ -1442,6 +1443,7 @@ main:focus {
 }
 .input:focus {
   border-color: var(--c-petrol);
+  outline: 3px solid var(--c-lavender-light);
   outline: 3px solid color-mix(in srgb, var(--c-focus) 35%, transparent);
   outline-offset: 0;
 }
@@ -1840,10 +1842,23 @@ textarea.input {
   padding: 0;
   border-radius: var(--radius-lg);
   width: min(560px, calc(100vw - 32px));
+  max-height: calc(100vh - 48px);
   max-height: calc(100dvh - 48px);
   background: var(--c-surface);
   color: var(--c-ink);
   box-shadow: 0 24px 64px rgba(10, 53, 64, 0.3);
+}
+.dialog:not([open]) {
+  display: none;
+}
+.dialog-fallback {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  overflow: auto;
+  box-shadow: 0 0 0 100vmax rgba(10, 30, 36, 0.55);
 }
 .dialog::backdrop {
   background: rgba(10, 30, 36, 0.55);
@@ -1961,6 +1976,7 @@ textarea.input {
 
 /* Ersteinrichtung */
 .onboarding {
+  min-height: 100vh;
   min-height: 100dvh;
   background: radial-gradient(circle at 20% 0%, var(--c-mint-soft), transparent 50%),
     radial-gradient(circle at 100% 30%, var(--c-lavender-soft), transparent 45%), var(--c-cream);

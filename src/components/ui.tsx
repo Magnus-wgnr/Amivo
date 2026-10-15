@@ -189,8 +189,19 @@ export function Dialog({
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    if (open && !el.open) el.showModal();
-    if (!open && el.open) el.close();
+    // Ältere Browser (z. B. Safari vor 15.4) kennen <dialog> nicht – dann einfaches Overlay
+    const native = typeof el.showModal === 'function';
+    if (open && !el.hasAttribute('open')) {
+      if (native) el.showModal();
+      else {
+        el.setAttribute('open', '');
+        el.classList.add('dialog-fallback');
+      }
+    }
+    if (!open && el.hasAttribute('open')) {
+      if (native) el.close();
+      else el.removeAttribute('open');
+    }
   }, [open]);
 
   return (
