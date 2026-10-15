@@ -16,6 +16,14 @@ npm test           # Unit-Tests (Vitest)
 
 Der Build verwendet relative Pfade und einen Hash-Router und lässt sich deshalb auf jedem statischen Hosting veröffentlichen (z. B. GitHub Pages).
 
+## Veröffentlichen (GitHub Pages)
+
+Die gebaute App liegt auf dem Branch `gh-pages`. Der Build enthält zusätzlich ein Paket für ältere Browser (`@vitejs/plugin-legacy`).
+
+Aktualisieren: `npm run build`, dann den Inhalt von `dist/` (plus eine leere Datei `.nojekyll`) auf den Branch `gh-pages` übertragen.
+
+Einmalig in den Repository-Einstellungen: **Settings → Pages → Source: „Deploy from a branch“, Branch `gh-pages`, Ordner `/ (root)`**. Die App ist dann unter `https://magnus-wgnr.github.io/Amivo/` erreichbar.
+
 ## Hotline konfigurieren
 
 Die Hotline-Nummer kommt aus der Umgebungsvariable `VITE_HOTLINE_PHONE` (siehe `.env.example`).
