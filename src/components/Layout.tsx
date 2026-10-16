@@ -1,9 +1,10 @@
-import { CalendarHeart, CircleHelp, Home, MessageCircle, Phone, User, Users } from 'lucide-react';
-import { Suspense, useEffect, useRef } from 'react';
+import { CalendarHeart, CircleHelp, Home, MessageCircle, Phone, Type, User, Users } from 'lucide-react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { totalUnread } from '../state/reducer';
 import { useStore } from '../state/AppStore';
-import { Logo, Spinner } from './ui';
+import { FontSizePicker, fontScaleLabel } from './FontSizePicker';
+import { Dialog, Logo, Spinner } from './ui';
 
 const NAV = [
   { to: '/', label: 'Startseite', icon: Home, end: true },
@@ -19,6 +20,7 @@ export function Layout() {
   const mainRef = useRef<HTMLElement>(null);
   const unread = totalUnread(state);
   const firstRender = useRef(true);
+  const [fontOpen, setFontOpen] = useState(false);
 
   // Nach jedem Seitenwechsel nach oben scrollen und den Fokus auf die Überschrift setzen,
   // damit Screenreader den neuen Seitentitel vorlesen.
@@ -49,6 +51,15 @@ export function Layout() {
           <Logo />
         </Link>
         <div className="topbar-actions">
+          <button
+            type="button"
+            className="topbar-btn"
+            onClick={() => setFontOpen(true)}
+            aria-label={`Schriftgröße ändern, aktuell: ${fontScaleLabel(state.a11y.fontScale)}`}
+          >
+            <Type aria-hidden size={24} />
+            <span>Schrift</span>
+          </button>
           <Link to="/nachrichten" className="topbar-btn">
             <MessageCircle aria-hidden size={24} />
             <span>Nachrichten</span>
@@ -81,6 +92,22 @@ export function Layout() {
           ))}
         </ul>
       </nav>
+
+      <Dialog
+        open={fontOpen}
+        onClose={() => setFontOpen(false)}
+        title="Schriftgröße"
+        footer={
+          <button type="button" className="btn btn-primary btn-block btn-lg" onClick={() => setFontOpen(false)}>
+            Fertig
+          </button>
+        }
+      >
+        <p>Tippe auf die Größe, die du am besten lesen kannst. Die App passt sich sofort an.</p>
+        <FontSizePicker name="font-size-dialog" />
+        <p className="font-dialog-preview">So sieht ein Text in dieser Größe aus: Gemeinsam statt einsam.</p>
+        <p className="small muted">Weitere Einstellungen wie hoher Kontrast findest du unter Profil → Barrierefreiheit.</p>
+      </Dialog>
 
       <main id="inhalt" ref={mainRef} tabIndex={-1} className="main" key={location.pathname}>
         <Suspense fallback={<Spinner />}>

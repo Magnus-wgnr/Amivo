@@ -51,6 +51,9 @@ html[data-font='gross'] {
 html[data-font='sehr-gross'] {
   font-size: 146%;
 }
+html[data-font='extra-gross'] {
+  font-size: 165%;
+}
 
 /* Hoher Kontrast */
 html[data-contrast='hoch'] {
@@ -249,6 +252,13 @@ main:focus {
   font-size: 0.78rem;
   position: relative;
 }
+button.topbar-btn {
+  background: transparent;
+  border: 0;
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
 .topbar-btn:hover {
   background: var(--c-petrol-soft);
 }
@@ -444,6 +454,7 @@ main:focus {
 }
 .section-title {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
   gap: 12px;
@@ -710,6 +721,8 @@ main:focus {
   flex-direction: column;
   gap: 4px;
   flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
   align-items: flex-start;
 }
 .list-row > svg:last-child {
@@ -1429,8 +1442,13 @@ main:focus {
 }
 .field-pair {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  /* bei großer Schrift automatisch untereinander */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
   gap: 12px;
+}
+.field-pair .field,
+.field-pair .input {
+  min-width: 0;
 }
 .input {
   width: 100%;
@@ -1937,6 +1955,85 @@ textarea.input {
   }
 }
 
+/* Schriftgrößen-Auswahl */
+.font-picker {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.font-option {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  min-height: 112px;
+  padding: 12px 8px;
+  border: 2px solid var(--c-border);
+  border-radius: var(--radius);
+  background: var(--c-surface);
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.2s var(--ease), background 0.2s var(--ease);
+}
+.font-option:hover {
+  border-color: var(--c-petrol);
+}
+.font-option.selected {
+  border-color: var(--c-petrol);
+  background: var(--c-petrol-soft);
+  box-shadow: inset 0 0 0 1px var(--c-petrol);
+}
+.font-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.font-option:has(input:focus-visible) {
+  outline: 3px solid var(--c-focus);
+  outline-offset: 3px;
+}
+.font-option-sample {
+  font-family: var(--font-head);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--c-petrol);
+}
+.font-option-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 700;
+  line-height: 1.25;
+}
+.font-option-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.82rem;
+  color: var(--c-mint-strong);
+}
+.font-dialog-preview {
+  margin: 0;
+  padding: 14px;
+  border-radius: var(--radius-sm);
+  background: var(--c-surface-2);
+}
+.font-shortcut {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  text-align: left;
+}
+.font-shortcut h2 {
+  font-size: 1.1rem;
+}
+
 /* FAQ */
 .faq {
   display: flex;
@@ -2090,6 +2187,38 @@ textarea.input {
   }
   .nav-item {
     font-size: 0.72rem;
+  }
+}
+
+/* Navigationsleisten: Beschriftungen wachsen nur begrenzt mit, damit oben und unten
+   alles in eine Zeile passt. Der Seiteninhalt skaliert unverändert mit. */
+.topbar-btn {
+  font-size: min(0.78rem, 14px);
+}
+.logo-text {
+  font-size: min(1.5rem, 27px);
+}
+.count-pill {
+  font-size: min(0.8rem, 14px);
+}
+@media (max-width: 899px) {
+  .nav-item {
+    font-size: min(0.8rem, 14px);
+  }
+}
+@media (max-width: 380px) {
+  .topbar-btn {
+    min-width: 56px;
+    padding: 4px;
+  }
+  .topbar-btn span:not(.count-pill) {
+    font-size: 12px;
+  }
+  .logo-mark {
+    width: 32px;
+  }
+  .nav-item {
+    font-size: 12px;
   }
 }
 

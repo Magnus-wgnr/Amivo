@@ -137,7 +137,7 @@ export interface UserProfile {
   contact: ContactSettings;
 }
 
-export type FontScale = 'normal' | 'gross' | 'sehr-gross';
+export type FontScale = 'normal' | 'gross' | 'sehr-gross' | 'extra-gross';
 
 export interface A11ySettings {
   fontScale: FontScale;

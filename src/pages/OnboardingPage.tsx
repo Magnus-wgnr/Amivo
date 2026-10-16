@@ -1,5 +1,6 @@
 import { CalendarHeart, HandHeart, Phone, Users } from 'lucide-react';
 import { useState } from 'react';
+import { FontSizePicker } from '../components/FontSizePicker';
 import { InterestPicker } from '../components/InterestPicker';
 import { DemoNote, Field, Logo, Note } from '../components/ui';
 import { HAMBURG_DISTRICTS } from '../data/catalog';
@@ -72,6 +73,11 @@ export default function OnboardingPage() {
               <h1 tabIndex={-1}>Willkommen bei AMIVO.</h1>
               <p className="slogan-big">Gemeinsam statt einsam.</p>
               <p>Lerne neue Menschen kennen, erlebe gemeinsam schöne Dinge und finde jemanden zum Reden – ganz einfach.</p>
+              <section className="font-shortcut" aria-labelledby="ob-font-title">
+                <h2 id="ob-font-title">Ist die Schrift gut lesbar?</h2>
+                <p className="muted small">Wähle die Größe, die für dich angenehm ist. Du kannst sie später jederzeit oben über „Schrift“ ändern.</p>
+                <FontSizePicker name="font-size-onboarding" />
+              </section>
               <label className="option-card helper-option">
                 <input type="checkbox" checked={withHelper} onChange={(e) => setWithHelper(e.target.checked)} />
                 <span>

@@ -1,11 +1,12 @@
 import { Database, Lock, ShieldCheck, Trash2, UserCheck } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import { FontSizePicker } from '../components/FontSizePicker';
 import { Avatar, DemoNote, PageHeader } from '../components/ui';
 import { useToast } from '../components/Toast';
 import { findPerson } from '../data/demoPeople';
 import { useStore } from '../state/AppStore';
-import type { ContactSettings, FontScale } from '../types';
+import type { ContactSettings } from '../types';
 
 function Switch({ id, label, hint, checked, onChange }: { id: string; label: string; hint?: string; checked: boolean; onChange: (v: boolean) => void }) {
   return (
@@ -142,12 +143,6 @@ function InfoLine({ icon, children }: { icon: ReactNode; children: ReactNode }) 
   );
 }
 
-const FONT_OPTIONS: { value: FontScale; label: string; sample: string }[] = [
-  { value: 'normal', label: 'Normal', sample: '100 %' },
-  { value: 'gross', label: 'Groß', sample: '115 %' },
-  { value: 'sehr-gross', label: 'Sehr groß', sample: '130 %' },
-];
-
 export function AccessibilityPage() {
   const { state, dispatch } = useStore();
   const a = state.a11y;
@@ -156,22 +151,9 @@ export function AccessibilityPage() {
       <PageHeader title="Barrierefreiheit" backTo="/profil" backLabel="Zurück zum Profil" />
       <p className="muted">Änderungen werden sofort übernommen und gespeichert.</p>
       <section className="card">
-        <fieldset className="radio-group">
-          <legend className="card-heading">Schriftgröße</legend>
-          {FONT_OPTIONS.map((o) => (
-            <label key={o.value} className={`option-card${a.fontScale === o.value ? ' selected' : ''}`}>
-              <input
-                type="radio"
-                name="font"
-                checked={a.fontScale === o.value}
-                onChange={() => dispatch({ type: 'setA11y', a11y: { fontScale: o.value } })}
-              />
-              <span>
-                <strong>{o.label}</strong> <span className="muted small">({o.sample})</span>
-              </span>
-            </label>
-          ))}
-        </fieldset>
+        <h2 className="card-heading">Schriftgröße</h2>
+        <p className="muted">Tippe auf die Größe, die du am besten lesen kannst. Die ganze App passt sich sofort an.</p>
+        <FontSizePicker name="font-size-settings" />
         <p className="font-preview">So sieht ein Text in dieser Größe aus: Gemeinsam statt einsam.</p>
       </section>
       <section className="card stack-md">
@@ -181,6 +163,7 @@ export function AccessibilityPage() {
       <section className="card">
         <h2 className="card-heading">Weitere Tipps</h2>
         <ul className="check-list">
+          <li>Die Schriftgröße kannst du auch jederzeit oben über die Schaltfläche „Schrift“ ändern.</li>
           <li>Du kannst die Ansicht auch mit zwei Fingern vergrößern.</li>
           <li>Die App funktioniert mit der Vorlesefunktion deines Geräts (VoiceOver oder TalkBack).</li>
           <li>Alle Funktionen sind auch mit der Tastatur bedienbar.</li>

@@ -18,7 +18,7 @@ const FAQ = [
   },
   {
     q: 'Wie kann ich die Schrift größer machen?',
-    a: 'Gehe zu „Profil“ → „Barrierefreiheit“ und wähle „Groß“ oder „Sehr groß“.',
+    a: 'Tippe oben auf „Schrift“ und wähle eine größere Stufe, zum Beispiel „Groß“ oder „Extra groß“. Die Einstellung findest du auch unter „Profil“ → „Barrierefreiheit“.',
   },
   {
     q: 'Was mache ich, wenn sich jemand unangemessen verhält?',
